@@ -1,0 +1,10 @@
+# vscode 파일
+.vscode/
+
+#컴파일로 생성된 파일
+*.ilk
+*.obj
+*.pdb
+
+# 임시
+.github/
