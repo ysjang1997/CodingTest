@@ -67,43 +67,43 @@ bool check(int y, int x)
 
 void solve(int index, int depth)
 {
-    int y = index / (n - 1);
-    int x = index % (n - 1);
-    if (!check(y, x))
-        return;
-
-    visited[y][x] = 1;
-    curmoney += arr[y][x];
-    for (int i = 0; i < 4; i++)
+    for (int i = index; i <= n * n; i++)
     {
-        int ny = y + dy[i];
-        int nx = x + dx[i];
+        int y = i / (n - 1);
+        int x = i % (n - 1);
+        if (!check(y, x))
+            continue;
 
-        visited[ny][nx] = 1;
-        curmoney += arr[ny][nx];
-    }
+        visited[y][x] = 1;
+        curmoney += arr[y][x];
+        for (int i = 0; i < 4; i++)
+        {
+            int ny = y + dy[i];
+            int nx = x + dx[i];
 
-    if (depth == 3)
-    {
-        result = min(curmoney, result);
-    }
-    else
-    {
-        for (int i = index + 1; i <= n * n; i++)
+            visited[ny][nx] = 1;
+            curmoney += arr[ny][nx];
+        }
+
+        if (depth == 3)
+        {
+            result = min(curmoney, result);
+        }
+        else
         {
             solve(i, depth + 1);
         }
-    }
 
-    visited[y][x] = 0;
-    curmoney -= arr[y][x];
-    for (int i = 0; i < 4; i++)
-    {
-        int ny = y + dy[i];
-        int nx = x + dx[i];
+        visited[y][x] = 0;
+        curmoney -= arr[y][x];
+        for (int i = 0; i < 4; i++)
+        {
+            int ny = y + dy[i];
+            int nx = x + dx[i];
 
-        visited[ny][nx] = 0;
-        curmoney -= arr[ny][nx];
+            visited[ny][nx] = 0;
+            curmoney -= arr[ny][nx];
+        }
     }
 }
 
@@ -118,8 +118,7 @@ int main()
         }
     }
 
-    for (int i = (n - 1) + 1; i < n * n; i++)
-        solve(i, 1);
+    solve(0, 1);
 
     cout << result;
 
